@@ -54,14 +54,16 @@ if (useCluster && cluster.isMaster) {
 
       function normalizePrivateKey(rawKey) {
         if (!rawKey) return rawKey;
-        // Strip literal quotes if present
-        let normalized = rawKey.trim();
-        if ((normalized.startsWith('"') && normalized.endsWith('"')) ||
-          (normalized.startsWith("'") && normalized.endsWith("'"))) {
-          normalized = normalized.slice(1, -1);
+        // 1. Remove all quotes (single or double) from start/end
+        let normalized = rawKey.trim().replace(/^['"]|['"]$/g, '');
+        // 2. Fix literal \n or \\n characters with real newlines
+        // Some systems escape the backslash, so we handle both \\n and \n
+        normalized = normalized.replace(/\\n/g, '\n');
+        // 3. Ensure the result actually has newlines. If not, it's definitely invalid for PEM
+        if (!normalized.includes('\n')) {
+          console.error("DEBUG: Private key normalization failed to find newlines. Verify your ENV variable formatting.");
         }
-        // Replace literal \n or \\n characters with real newlines
-        return normalized.replace(/\\n/g, '\n');
+        return normalized;
       }
 
       const firebasePrivateKey = normalizePrivateKey(rawFirebasePrivateKey);
