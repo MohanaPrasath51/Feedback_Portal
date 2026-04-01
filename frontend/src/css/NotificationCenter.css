@@ -1,0 +1,231 @@
+.notification-center-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.note-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 12px;
+  color: var(--text-2);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.note-toggle:hover {
+  background: var(--surface-2);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.note-badge {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  background: var(--danger);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 800;
+  min-width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2.5px solid var(--surface);
+}
+
+.note-toggle.pulse svg {
+  animation: note-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes note-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.note-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 360px;
+  max-height: 500px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.1), 0 8px 15px -4px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+  animation: note-slide 0.25s cubic-bezier(0, 0.55, 0.45, 1);
+}
+
+@keyframes note-slide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.note-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(var(--surface-rgb), 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.note-header h4 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-1);
+}
+
+.note-header button {
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.note-header button:hover {
+  background: var(--primary-light);
+}
+
+.note-list {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.note-item {
+  padding: 1.1rem 1.5rem;
+  display: flex;
+  gap: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+
+.note-item:hover {
+  background: var(--surface-2);
+}
+
+.note-item.unread {
+  background: var(--primary-light);
+}
+
+.note-icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--border);
+}
+
+.note-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.note-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-1);
+  margin-bottom: 0.2rem;
+}
+
+.note-text {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--text-2);
+  margin-bottom: 0.4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.note-date {
+  font-size: 0.7rem;
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+.note-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
+  border-radius: 50%;
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  box-shadow: 0 0 0 3px var(--surface);
+}
+
+.note-empty {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-3);
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+.dark .note-dropdown {
+  background: #0F172A;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.dark .note-icon-box {
+  background: #1E293B;
+}
+
+.dark .note-header {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+@media (max-width: 480px) {
+  .note-dropdown {
+    position: fixed;
+    top: 70px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-height: calc(100vh - 100px);
+    z-index: 9999;
+  }
+}

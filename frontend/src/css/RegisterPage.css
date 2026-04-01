@@ -1,0 +1,14 @@
+@import './LoginPage.css';
+
+/* Register specific shared overwrites if any */
+/* Target labels specifically in login/register pages for better contrast */
+.login-page .form-label {
+  color: #f1f5f9 !important; /* Brighter, almost white for better visibility */
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.login-page .content-wrapper {
+  min-height: 680px;
+}
