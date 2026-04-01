@@ -161,14 +161,23 @@ if (useCluster && cluster.isMaster) {
       console.error(`${logPrefix}Admin seed warning: ${error.message}`);
     }
 
-    server.listen(PORT, () => {
-      console.log(`${logPrefix}Server running on port ${PORT}`);
-    });
+    if (!process.env.VERCEL) {
+      server.listen(PORT, () => {
+        console.log(`${logPrefix}Server running on port ${PORT}`);
+      });
+    }
+
+    return app;
   };
 
-  // Start initialization
-  initializeApp().catch((error) => {
+  const appPromise = initializeApp().catch((error) => {
     console.error(`${logPrefix}Startup error:`, error.message);
     process.exit(1);
   });
+
+  // Vercel / Production Export
+  module.exports = async (req, res) => {
+    const app = await appPromise;
+    return app(req, res);
+  };
 }
